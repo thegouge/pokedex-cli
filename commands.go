@@ -22,5 +22,15 @@ func getCommands() map[string]cliCommand {
 			description: "Turns off the Pokedex",
 			callback:    commandExit,
 		},
+		"map": {
+			name:        "map",
+			description: "Lists 20 pokemon world locations, each subsequent call will give you the next 20 locations",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Lists the previous 20 pokemon world locations",
+			callback:    commandMapB,
+		},
 	}
 }
