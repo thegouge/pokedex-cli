@@ -1,9 +1,5 @@
 package main
 
-type config struct {
-	offset int
-}
-
 type cliCommand struct {
 	name        string
 	description string

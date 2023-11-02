@@ -3,14 +3,23 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"internal/pokeApi"
 	"os"
 	"strings"
 )
 
+type config struct {
+	pokeApiClient    pokeApi.Client
+	NextLocation     *string
+	PreviousLocation *string
+}
+
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
 	commands := getCommands()
-	config := config{offset: 0}
+	config := config{
+		pokeApiClient: pokeApi.NewClient(),
+	}
 
 	for {
 		fmt.Print("Pokedex > ")
