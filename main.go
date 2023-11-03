@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"internal/pokeApi"
+	"github.com/thegouge/pokedex-cli/internal/pokeApi"
 	"os"
 	"strings"
 )
@@ -35,7 +35,6 @@ func main() {
 			err := command.callback(&config)
 			if err != nil {
 				fmt.Println(err)
-				return
 			}
 		} else {
 			fmt.Println("I don't understand that command")
