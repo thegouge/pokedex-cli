@@ -17,10 +17,10 @@ func (c *Client) GetLocationArea(pageURL *string) (AreaResponse, error) {
 
 	areaData := AreaResponse{}
 
-	requestCache, ok := c.cache.Entries[fullURL]
+	requestCache, ok := c.cache.Get(fullURL)
 
 	if ok {
-		jsonError := json.Unmarshal(requestCache.Val, &areaData)
+		jsonError := json.Unmarshal(requestCache, &areaData)
 
 		if jsonError != nil {
 			return AreaResponse{}, jsonError
@@ -31,23 +31,23 @@ func (c *Client) GetLocationArea(pageURL *string) (AreaResponse, error) {
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
-		return areaData, err
+		return AreaResponse{}, err
 	}
 
 	res, err := c.httpClient.Do(req)
 	if err != nil {
-		return areaData, err
+		return AreaResponse{}, err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode > 399 {
-		return areaData, fmt.Errorf("bad status code: %v", res.StatusCode)
+		return AreaResponse{}, fmt.Errorf("bad status code: %v", res.StatusCode)
 	}
 
 	body, err := io.ReadAll(res.Body)
 
 	if err != nil {
-		return areaData, err
+		return AreaResponse{}, err
 	}
 
 	c.cache.Add(fullURL, body)
