@@ -32,7 +32,7 @@ func main() {
 			continue
 		}
 		if command, exists := commands[userCommand]; exists {
-			err := command.callback(&config)
+			err := command.callback(&config, cleaned[1:])
 			if err != nil {
 				fmt.Println(err)
 			}

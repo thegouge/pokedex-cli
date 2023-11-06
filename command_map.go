@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func commandMap(config *config) error {
+func commandMap(config *config, args []string) error {
 	response, err := config.pokeApiClient.GetLocationArea(config.NextLocation)
 	if err != nil {
 		return err
@@ -21,7 +21,7 @@ func commandMap(config *config) error {
 	return nil
 }
 
-func commandMapB(config *config) error {
+func commandMapB(config *config, args []string) error {
 	if config.PreviousLocation == nil {
 		return errors.New("Cannot move further back")
 	}
