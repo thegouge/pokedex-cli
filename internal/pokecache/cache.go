@@ -39,10 +39,14 @@ func (c *Cache) reapLoop(lifespan time.Duration) {
 	defer c.mu.Unlock()
 
 	currentTime := time.Now()
-	for key, entry := range c.entries {
-		timeDiff := currentTime.Sub(entry.createdAt)
-		if timeDiff >= lifespan {
-			delete(c.entries, key)
+	ticker := time.NewTicker(lifespan)
+
+	for range ticker.C {
+		for key, entry := range c.entries {
+			timeDiff := currentTime.Sub(entry.createdAt)
+			if timeDiff >= lifespan {
+				delete(c.entries, key)
+			}
 		}
 	}
 
@@ -54,13 +58,7 @@ func NewCache(reapInterval time.Duration) Cache {
 		mu:      &sync.RWMutex{},
 	}
 
-	ticker := time.NewTicker(reapInterval)
-
-	go func() {
-		for range ticker.C {
-			cache.reapLoop(reapInterval)
-		}
-	}()
+	go cache.reapLoop(reapInterval)
 
 	return cache
 }
