@@ -20,6 +20,7 @@ func main() {
 	commands := getCommands()
 	config := config{
 		pokeApiClient: pokeApi.NewClient(),
+		Pokedex:       map[string]pokeApi.PokemonData{},
 	}
 
 	for {
