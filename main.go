@@ -12,6 +12,7 @@ type config struct {
 	pokeApiClient    pokeApi.Client
 	NextLocation     *string
 	PreviousLocation *string
+	Pokedex          map[string]pokeApi.PokemonData
 }
 
 func main() {
